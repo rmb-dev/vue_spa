@@ -1,51 +1,45 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Home from '@/components/Home'
-import Ad from '@/components/Ads/Ad'
-import AdList from '@/components/Ads/AdList'
-import NewAd from '@/components/Ads/NewAd'
+import Bikes from '@/components/Items/Bikes'
+import Parts from '@/components/Items/Parts'
+import Gear from '@/components/Items/Gear'
+import Places from '@/components/Items/Places'
 import Login from '@/components/Auth/Login'
-import Registration from '@/components/Auth/Registration'
-import Orders from '@/components/User/Orders'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '',
       name: 'home',
       component: Home
     },
     {
-      path: '/ad/:id',
-      name: 'ad',
-      component: Ad
+      path: '/bikes/:id',
+      name: 'bikes',
+      component: Bikes
     },
     {
-      path: '/list',
-      name: 'list',
-      component: AdList
+      path: '/parts',
+      name: 'parts',
+      component: Parts
     },
     {
-      path: '/new',
-      name: 'newAd',
-      component: NewAd
+      path: '/gear',
+      name: 'gear',
+      component: Gear
+    },
+    {
+      path: '/places',
+      name: 'places',
+      component: Places
     },
     {
       path: '/login',
       name: 'login',
       component: Login
-    },
-    {
-      path: '/registration',
-      name: 'reg',
-      component: Registration
-    },
-    {
-      path: '/orders',
-      name: 'orders',
-      component: Orders
     }
   ],
   mode: 'history'
