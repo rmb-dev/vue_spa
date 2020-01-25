@@ -3,54 +3,37 @@
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6>
         <v-card class="elevation-12">
-          <v-toolbar color="primary" dark flat>
+          <v-toolbar dark color="primary">
             <v-toolbar-title>Login form</v-toolbar-title>
-
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn :href="source" icon large target="_blank" v-on="on">
-                  <v-icon>mdi-code-tags</v-icon>
-                </v-btn>
-              </template>
-
-              <span>Source</span>
-            </v-tooltip>
-
-            <v-tooltip right>
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  icon
-                  large
-                  href="https://codepen.io/johnjleider/pen/pMvGQO"
-                  target="_blank"
-                  v-on="on"
-                >
-                  <v-icon>mdi-codepen</v-icon>
-                </v-btn>
-              </template>
-
-              <span>Codepen</span>
-            </v-tooltip>
           </v-toolbar>
-
           <v-card-text>
-            <v-form>
-              <v-text-field label="Login" name="login" prepend-icon="person" type="text"></v-text-field>
-
+            <v-form v-model="valid" ref="form" validation>
               <v-text-field
-                id="password"
-                label="Password"
-                name="password"
+                prepend-icon="person"
+                name="email"
+                label="Email"
+                type="email"
+                v-model="email"
+                :rules="emailRules"
+              ></v-text-field>
+              <v-text-field
                 prepend-icon="lock"
+                name="password"
+                label="Password"
                 type="password"
+                :counter="6"
+                v-model="password"
+                :rules="passwordRules"
               ></v-text-field>
             </v-form>
           </v-card-text>
-
           <v-card-actions>
             <v-spacer></v-spacer>
-
-            <v-btn color="primary">Login</v-btn>
+            <v-btn
+              color="primary"
+              @click="onSubmit"
+              :disabled="!valid"
+            >Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -59,10 +42,35 @@
 </template>
 
 <script>
-export default {
-  data() {
-    
-  }
-};
-</script>
+  const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
 
+  export default {
+    data () {
+      return {
+        email: '',
+        password: '',
+        valid: false,
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => emailRegex.test(v) || 'E-mail must be valid'
+        ],
+        passwordRules: [
+          v => !!v || 'Password is required',
+          v => (v && v.length >= 6) || 'Password must be equal or more than 6 characters'
+        ]
+      }
+    },
+    methods: {
+      onSubmit () {
+        if (this.$refs.form.validate()) {
+          const user = {
+            email: this.email,
+            password: this.password
+          }
+
+          console.log(user)
+        }
+      }
+    }
+  }
+</script>
